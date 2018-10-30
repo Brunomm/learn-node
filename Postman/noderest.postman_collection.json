@@ -12,6 +12,22 @@
 			"item": [
 				{
 					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ffadaf28-af95-4a7b-8778-2b88dff2e780",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"if(jsonData.token){",
+									"    postman.setEnvironmentVariable(\"token\", jsonData.token);",
+									"}"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -22,7 +38,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Bruno\",\n\t\"email\": \"bruno@gmail.com\",\n\t\"password\": \"123456\"\n}"
+							"raw": "{\n\t\"name\": \"Bruno\",\n\t\"email\": \"brunomergen@gmail.com\",\n\t\"password\": \"123456\"\n}"
 						},
 						"url": {
 							"raw": "{{baseurl}}/auth/register",
@@ -37,8 +53,100 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "83407166-817d-47e5-950b-7c0642881c56",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"brunomergen@gmail.com\",\n\t\"password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{baseurl}}/auth/authenticate",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"auth",
+								"authenticate"
+							]
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
+		},
+		{
+			"name": "Projects",
+			"description": "",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseurl}}/projects",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"projects"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			}
 		}
 	]
 }

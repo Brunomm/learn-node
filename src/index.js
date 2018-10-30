@@ -11,5 +11,6 @@ app.get('/', (req, res) => {
 });
 
 require('./controllers/authController')(app);
+require('./controllers/projectsController')(app);
 
 app.listen(3000, '0.0.0.0');

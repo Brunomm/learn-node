@@ -5,7 +5,7 @@ services:
   app:
     image: node:alpine
     working_dir: /app
-    command: node start
+    command: yarn start
     volumes:
       - .:/app
     ports:
